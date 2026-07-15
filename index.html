@@ -839,14 +839,16 @@
     .media-main img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       transition: opacity 0.3s;
     }
 
-    .media-main iframe {
+    .media-main iframe,
+    .media-main video {
       width: 100%;
       height: 100%;
       border: none;
+      object-fit: contain;
     }
 
     .media-placeholder {
@@ -1730,7 +1732,7 @@
         tech: ["Python", "PostgreSQL", "JavaScript", "Flask", "CSS"],
         link: "https://github.com/TheFive40/Foopilot",
         media: [
-          {type: 'video', src: 'https://streamable.com/zo1rzw'}
+          {type: 'video', src: 'mp4/foopilot/linkedin-video.mp4'}
         ]
       },
       {
@@ -1760,25 +1762,31 @@
         ]
       },
       {
-        title: "Emisora Online",
-        badge: "Streaming",
-        gradient: ['#0a1215', '#0d2430'],
-        artIdx: 2,
-        short: "Plataforma de radio en línea con reproducción en vivo y gestión de contenido.",
-        desc: "Sistema de emisora online que permite transmitir audio en vivo usando WebSockets, con panel de administración para gestionar programación, oyentes y contenido.",
+        title: "OrderGo",
+        badge: "ERP / Restaurantes / Repostería",
+        gradient: ['#1a1005', '#3d2008'],
+        artIdx: 5,
+        short: "ERP integral para reposterías y distribuidores de panadería: gestiona clientes, pedidos, facturación, inventario, domiciliarios y rutas en un solo sistema.",
+        desc: "OrderGo SweetFlow es un ERP completo diseñado para reposterías, distribuidores de productos de panadería y negocios de venta por pedido. Centraliza la operación comercial desde la captura de clientes y la toma de pedidos hasta la facturación, cobranza, control de inventario, gestión de domiciliarios, mapas de entregas y reportes administrativos. Incluye roles diferenciados (Administrador, Vendedor y Domiciliario), envío automático de facturas por WhatsApp, geolocalización de clientes, códigos de descuento, combos/ofertas y exportación a Excel.",
         features: [
-          "Transmisión de audio en vivo vía WebSocket",
-          "Panel de administración de programación",
-          "Gestión de locutores y shows",
-          "Reproductor web embebible"
+          "Gestión de clientes con geolocalización",
+          "Toma de pedidos con combos, ofertas y códigos de descuento",
+          "Facturación, cobranza y envío automático de facturas por WhatsApp",
+          "Control de inventario en tiempo real",
+          "Gestión de domiciliarios y mapas de rutas de entrega",
+          "Roles diferenciados: Administrador, Vendedor y Domiciliario",
+          "Reportes administrativos y exportación a Excel"
         ],
-        tech: ["JavaScript", "Python", "WebSocket", "Flask", "CSS"],
-        link: "https://github.com/TheFive40/Emisora",
+        tech: ["Java 21", "Spring Boot", "Spring Security", "JWT", "React 19", "TypeScript", "Vite", "PostgreSQL", "Node.js", "Express"],
+        link: "https://github.com/JeanFranco2805/OrderGo.git",
         media: [
-          {type:'image',src: 'https://i.imgur.com/Zc9ryWz.png'},
-          {type: 'image', src: 'https://i.imgur.com/PVh43wV.png'},
-          {type: 'image', src: 'https://i.imgur.com/dt0JCkA.png'},
-          {type: 'image', src: 'https://i.imgur.com/rHrLKxd.png'},
+          {type: 'image', src: 'img/ordergo/img.png'},
+          {type: 'image', src: 'img/ordergo/img_1.png'},
+          {type: 'image', src: 'img/ordergo/img_2.png'},
+          {type: 'image', src: 'img/ordergo/img_3.png'},
+          {type: 'image', src: 'img/ordergo/img_4.png'},
+          {type: 'image', src: 'img/ordergo/img_5.png'},
+          {type: 'image', src: 'img/ordergo/img_6.png'},
         ]
       },
       {
@@ -2064,10 +2072,14 @@
     if (!main) return;
     const m = media[idx];
     if (m.type === 'video') {
-      const src = m.src.includes('youtube.com') || m.src.includes('youtu.be')
-        ? 'https://www.youtube.com/embed/' + extractYoutubeId(m.src) + '?autoplay=0'
-        : m.src;
-      main.innerHTML = `<iframe src="${src}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+      if (m.src.includes('youtube.com') || m.src.includes('youtu.be')) {
+        const src = 'https://www.youtube.com/embed/' + extractYoutubeId(m.src) + '?autoplay=0';
+        main.innerHTML = `<iframe src="${src}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+      } else if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(m.src)) {
+        main.innerHTML = `<video src="${m.src}" controls playsinline></video>`;
+      } else {
+        main.innerHTML = `<iframe src="${m.src}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+      }
     } else {
       main.innerHTML = `<img src="${m.src}" alt="${m.alt || 'Screenshot'}">`;
     }
