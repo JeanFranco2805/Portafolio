@@ -667,6 +667,32 @@
       justify-content: center;
     }
 
+    .proj-preview-art.has-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8, 8, 9, 0.04), rgba(8, 8, 9, 0.3));
+      pointer-events: none;
+    }
+
+    .proj-preview-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .proj-preview-art.portrait .proj-preview-image {
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .proj-card:hover .proj-preview-image {
+      transform: scale(1.035);
+    }
+
     .proj-preview-label {
       position: absolute;
       bottom: 0.9rem;
@@ -841,6 +867,17 @@
       height: 100%;
       object-fit: contain;
       transition: opacity 0.3s;
+    }
+
+    .media-main.portrait {
+      aspect-ratio: auto;
+      height: min(70vh, 720px);
+    }
+
+    .media-main.portrait img {
+      width: auto;
+      max-width: 100%;
+      height: 100%;
     }
 
     .media-main iframe,
@@ -1034,6 +1071,11 @@
       flex-wrap: wrap;
       gap: 0.45rem;
       margin-bottom: 2rem;
+    }
+
+    #modalTechTitle[hidden],
+    #modalTechs[hidden] {
+      display: none;
     }
 
     .modal-tech {
@@ -1573,7 +1615,7 @@
     <p class="modal-desc" id="modalDesc"></p>
     <div class="modal-section-title">Características principales</div>
     <ul class="feature-list" id="modalFeatures"></ul>
-    <div class="modal-section-title">Stack tecnológico</div>
+    <div class="modal-section-title" id="modalTechTitle">Stack tecnológico</div>
     <div class="modal-techs" id="modalTechs"></div>
     <div class="modal-actions" style="margin-top:1rem">
       <a href="#" id="modalGithub" target="_blank" class="btn-modal">Ver en GitHub</a>
@@ -1592,74 +1634,84 @@
   }, {threshold: 0.1});
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  const gradients = [
-    ['#071a0a', '#0d3318'],
-    ['#1a1200', '#3d2e00'],
-    ['#1a0808', '#331010'],
-    ['#0f0a1a', '#1e0d33'],
-    ['#0a1215', '#0d2430'],
-    ['#0a1a0d', '#1a3322'],
-    ['#0a0f1a', '#0d1e33'],
-    ['#1a1000', '#2e2000'],
-    ['#0a1a0d', '#0d3315'],
-    ['#0f0a1a', '#2a1040'],
-    ['#1a0a00', '#3d1800'],
-    ['#0a0f1a', '#0d1830'],
-  ];
+  const projectArt = {
+    restaurant: `
+      <rect x="28" y="18" width="284" height="144" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
+      <path d="M39 18h49v144H39a11 11 0 0 1-11-11V29a11 11 0 0 1 11-11Z" fill="rgba(8,8,9,.36)"/>
+      <circle cx="63" cy="43" r="14" fill="#d6784f" opacity=".92"/>
+      <path d="M54 44h18M63 35v18M57 39c3 3 9 3 12 0M57 49c3-3 9-3 12 0" fill="none" stroke="#fff4e9" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="48" y="72" width="30" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>
+      <rect x="48" y="86" width="24" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
+      <rect x="48" y="100" width="27" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
+      <rect x="104" y="31" width="92" height="8" rx="4" fill="rgba(255,255,255,.76)"/>
+      <rect x="251" y="27" width="47" height="17" rx="5" fill="rgba(71,157,110,.28)" stroke="rgba(119,211,158,.35)"/>
+      <circle cx="261" cy="35.5" r="3" fill="#7bd39c"/><rect x="268" y="33" width="22" height="5" rx="2.5" fill="rgba(255,255,255,.5)"/>
+      <rect x="103" y="53" width="88" height="73" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <circle cx="147" cy="83" r="19" fill="rgba(214,120,79,.2)" stroke="rgba(214,120,79,.5)"/>
+      <path d="M135 84h24M147 72c-8 0-13 5-13 12s5 12 13 12 13-5 13-12-5-12-13-12Z" fill="none" stroke="#e7a17c" stroke-width="1.5"/>
+      <rect x="122" y="108" width="51" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>
+      <rect x="202" y="53" width="96" height="73" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <rect x="213" y="65" width="73" height="6" rx="3" fill="rgba(255,255,255,.48)"/>
+      <rect x="213" y="79" width="58" height="5" rx="2.5" fill="rgba(255,255,255,.19)"/>
+      <rect x="213" y="92" width="65" height="5" rx="2.5" fill="rgba(255,255,255,.19)"/>
+      <rect x="213" y="106" width="38" height="10" rx="4" fill="rgba(214,120,79,.35)"/>
+      <rect x="103" y="137" width="195" height="8" rx="4" fill="rgba(255,255,255,.08)"/>
+      <rect x="103" y="137" width="126" height="8" rx="4" fill="#d6784f"/>
+    `,
+    analytics: `
+      <rect x="28" y="18" width="284" height="144" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
+      <rect x="43" y="31" width="113" height="76" rx="7" fill="#17131a" stroke="rgba(255,255,255,.12)"/>
+      <rect x="49" y="37" width="101" height="64" rx="4" fill="#332129"/>
+      <path d="M49 85 76 66l19 9 20-23 35 27v22H49Z" fill="#8d4750" opacity=".74"/>
+      <circle cx="99.5" cy="69" r="13" fill="#cf3d44"/>
+      <path d="m96 62 11 7-11 7Z" fill="white"/>
+      <rect x="169" y="31" width="126" height="34" rx="6" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <rect x="180" y="41" width="24" height="14" rx="4" fill="rgba(207,61,68,.35)"/>
+      <rect x="212" y="40" width="69" height="6" rx="3" fill="rgba(255,255,255,.57)"/>
+      <rect x="212" y="51" width="47" height="5" rx="2.5" fill="rgba(255,255,255,.2)"/>
+      <rect x="169" y="73" width="126" height="34" rx="6" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <path d="M181 96h9v-8h8v8h8V82h8v14h8V77h8v19h8V86h8v10h8" fill="none" stroke="#e0b85b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="43" y="119" width="252" height="28" rx="6" fill="rgba(255,255,255,.045)"/>
+      <path d="M54 139h15v-8H54Zm25 0h15v-14H79Zm25 0h15v-10h-15Zm25 0h15v-19h-15Zm25 0h15v-12h-15Zm25 0h15v-16h-15Zm25 0h15v-21h-15Zm25 0h15v-13h-15Zm25 0h15v-17h-15Zm25 0h15v-23h-15Z" fill="#e0b85b" opacity=".78"/>
+    `,
+    music: `
+      <rect x="28" y="18" width="284" height="144" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
+      <rect x="43" y="32" width="87" height="88" rx="8" fill="#271b3c" stroke="rgba(255,255,255,.12)"/>
+      <circle cx="86.5" cy="76" r="31" fill="#62427d"/>
+      <circle cx="86.5" cy="76" r="24" fill="#18131f" stroke="#b98be1" stroke-width="1.5"/>
+      <circle cx="86.5" cy="76" r="11" fill="#a879ce"/>
+      <circle cx="86.5" cy="76" r="3" fill="#211b28"/>
+      <path d="M116 47v34a8 8 0 1 1-4-7V55l21-5v25a8 8 0 1 1-4-7V45Z" fill="#f0f0f2" opacity=".85"/>
+      <rect x="148" y="39" width="132" height="8" rx="4" fill="rgba(255,255,255,.78)"/>
+      <rect x="148" y="54" width="82" height="6" rx="3" fill="rgba(255,255,255,.28)"/>
+      <rect x="148" y="71" width="132" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
+      <rect x="148" y="71" width="78" height="3" rx="1.5" fill="#b98be1"/>
+      <circle cx="226" cy="72.5" r="4" fill="#e9d4fb"/>
+      <path d="M45 103h5v9h-5Zm10-7h5v16h-5Zm10 2h5v14h-5Zm10-13h5v27h-5Zm10-5h5v32h-5Zm10 12h5v20h-5Zm10-9h5v29h-5Zm10 6h5v23h-5Zm10-12h5v35h-5Zm10 15h5v20h-5Zm10-8h5v28h-5Zm10 3h5v25h-5Zm10-13h5v38h-5Zm10 8h5v30h-5Zm10 6h5v24h-5Zm10-12h5v36h-5Zm10 15h5v21h-5Zm10-7h5v28h-5Zm10 4h5v24h-5Zm10-14h5v38h-5Zm10 9h5v29h-5Zm10-4h5v33h-5Zm10 8h5v25h-5Zm10-12h5v37h-5Zm10 6h5v31h-5Z" fill="#b98be1" opacity=".82"/>
+      <circle cx="77" cy="139" r="5" fill="rgba(255,255,255,.38)"/>
+      <path d="m75 136 5 3-5 3Z" fill="#101014"/>
+      <circle cx="170" cy="139" r="10" fill="#b98be1"/>
+      <path d="m167 133 8 6-8 6Z" fill="#17111e"/>
+      <circle cx="263" cy="139" r="5" fill="rgba(255,255,255,.38)"/>
+      <path d="m265 136-5 3 5 3Z" fill="#101014"/>
+    `
+  };
 
-  function makeArt(g, idx) {
-    const shapes = [
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect x="60" y="40" width="220" height="100" rx="4" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
-        <rect x="80" y="58" width="180" height="12" rx="2" fill="rgba(201,168,76,0.1)"/>
-        <rect x="80" y="78" width="140" height="8" rx="2" fill="rgba(255,255,255,0.05)"/>
-        <rect x="80" y="94" width="160" height="8" rx="2" fill="rgba(255,255,255,0.04)"/>
-        <rect x="80" y="110" width="60" height="14" rx="2" fill="rgba(201,168,76,0.2)"/>
-        <circle cx="295" cy="58" r="6" fill="rgba(255,255,255,0.06)"/>
-        <circle cx="310" cy="58" r="6" fill="rgba(255,255,255,0.06)"/>
-      </svg>`,
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <line x1="40" y1="90" x2="300" y2="90" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
-        <line x1="170" y1="30" x2="170" y2="150" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
-        <polyline points="50,130 90,60 140,100 190,50 240,80 290,40" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="90" cy="60" r="3" fill="rgba(201,168,76,0.8)"/>
-        <circle cx="190" cy="50" r="3" fill="rgba(201,168,76,0.8)"/>
-        <circle cx="290" cy="40" r="3" fill="rgba(201,168,76,0.8)"/>
-      </svg>`,
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect x="50" y="50" width="60" height="80" rx="3" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
-        <rect x="140" y="70" width="60" height="60" rx="3" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
-        <rect x="230" y="40" width="60" height="90" rx="3" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <line x1="110" y1="90" x2="140" y2="90" stroke="rgba(201,168,76,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
-        <line x1="200" y1="90" x2="230" y2="90" stroke="rgba(201,168,76,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
-      </svg>`,
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="170" cy="90" r="55" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
-        <circle cx="170" cy="90" r="35" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
-        <circle cx="170" cy="90" r="15" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <line x1="170" y1="35" x2="170" y2="145" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
-        <line x1="115" y1="90" x2="225" y2="90" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
-        <circle cx="170" cy="35" r="4" fill="rgba(201,168,76,0.5)"/>
-        <circle cx="225" cy="90" r="4" fill="rgba(201,168,76,0.3)"/>
-      </svg>`,
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect x="60" y="50" width="220" height="30" rx="3" fill="rgba(201,168,76,0.07)" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
-        <rect x="60" y="90" width="220" height="30" rx="3" fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
-        <rect x="60" y="130" width="220" height="12" rx="3" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-        <rect x="68" y="58" width="50" height="14" rx="2" fill="rgba(201,168,76,0.18)"/>
-        <rect x="126" y="60" width="80" height="10" rx="2" fill="rgba(255,255,255,0.06)"/>
-        <rect x="68" y="98" width="70" height="10" rx="2" fill="rgba(255,255,255,0.05)"/>
-      </svg>`,
-      `<svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="170,40 220,120 120,120" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <polygon points="170,60 205,115 135,115" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
-        <line x1="40" y1="140" x2="300" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-        <circle cx="170" cy="40" r="3" fill="rgba(201,168,76,0.7)"/>
-        <circle cx="220" cy="120" r="3" fill="rgba(201,168,76,0.4)"/>
-        <circle cx="120" cy="120" r="3" fill="rgba(201,168,76,0.4)"/>
-      </svg>`
-    ];
-    return `<div class="proj-preview-art" style="background:linear-gradient(135deg,${g[0]},${g[1]})">${shapes[idx % shapes.length]}</div>`;
+  function makeArt(project) {
+    const background = `linear-gradient(135deg,${project.gradient[0]},${project.gradient[1]})`;
+    const screenshot = project.media?.find(item => item.type === 'image');
+    if (screenshot) {
+      const alt = screenshot.alt || `Vista previa de ${project.title}`;
+      const portraitClass = screenshot.orientation === 'portrait' ? ' portrait' : '';
+      return `<div class="proj-preview-art has-image${portraitClass}" style="background:${background}">
+        <img class="proj-preview-image" src="${screenshot.src}" alt="${alt}" loading="lazy">
+      </div>`;
+    }
+
+    const scene = projectArt[project.art] || projectArt.analytics;
+    return `<div class="proj-preview-art" style="background:${background}">
+      <svg width="100%" height="100%" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${scene}</svg>
+    </div>`;
   }
 
   const projects = {
@@ -1668,7 +1720,6 @@
         title: "EducaT",
         badge: "LMS Platform",
         gradient: ['#071a0a', '#0d3318'],
-        artIdx: 0,
         short: "Plataforma LMS completa para instituciones educativas con gestión de cursos, foros, evaluaciones y más.",
         desc: "EducaT es una plataforma educativa integral (LMS) diseñada para instituciones de educación media y superior. Permite gestionar todo el ecosistema académico: desde la matrícula de estudiantes hasta la entrega de evaluaciones, foros de discusión y seguimiento académico por docente.",
         features: [
@@ -1693,19 +1744,18 @@
         ]
       },
       {
-        title: "SisPlus",
-        badge: "Nómina & RRHH",
+        title: "L&H AM Control",
+        badge: "ERP Empresarial",
         gradient: ['#1a1200', '#3d2e00'],
-        artIdx: 1,
-        short: "Sistema de control de asistencia y cálculo de nómina para empresas colombianas.",
-        desc: "SisPlus es un sistema web de control de asistencia y nómina pensado para el contexto laboral colombiano. Registra entradas y salidas, calcula automáticamente horas extras, recargos nocturnos y dominicales según la legislación vigente, y exporta reportes a Excel.",
+        short: "ERP empresarial para gestionar asistencia, vehículos, alertas y cargues desde una sola plataforma.",
+        desc: "L&H AM Control es un ERP desarrollado para centralizar la operación de una empresa. Permite gestionar la asistencia del personal, hacer seguimiento a los vehículos, configurar alertas para eventos relevantes y administrar los cargues, junto con otros procesos operativos.",
         features: [
-          "Registro de entradas y salidas por empleado",
-          "Cálculo automático de horas extras y recargos nocturnos",
-          "Cumplimiento con legislación laboral colombiana",
-          "Exportación de nómina a Excel",
-          "Gestión de empleados y roles",
-          "Autenticación segura con Spring Security"
+          "Registro y consulta de asistencia del personal",
+          "Seguimiento operativo a vehículos",
+          "Configuración de alertas según eventos y condiciones",
+          "Registro y control de cargues",
+          "Gestión centralizada de procesos y datos operativos",
+          "Administración de usuarios y permisos con Spring Security"
         ],
         tech: ["Java", "Spring Boot", "Spring Security", "Thymeleaf", "JavaScript", "PostgreSQL"],
         link: "https://github.com/TheFive40/SisPlus/",
@@ -1723,7 +1773,7 @@
         title: "Foopilot",
         badge: "Restaurantes",
         gradient: ['#1a0808', '#331010'],
-        artIdx: 4,
+        art: "restaurant",
         short: "Sistema de información completo para gestionar restaurantes: pedidos, carta e inventario.",
         desc: "Foopilot es una solución integral para la gestión de restaurantes. Permite administrar la carta digital, procesar pedidos en tiempo real, controlar el inventario de insumos y generar reportes de ventas.",
         features: [
@@ -1742,7 +1792,6 @@
         title: "Esthervital",
         badge: "Spa & Wellness",
         gradient: ['#0f0a1a', '#1e0d33'],
-        artIdx: 0,
         short: "Sistema de gestión para spas con reservas, servicios y control de inventario.",
         desc: "Esthervital es un sistema de gestión diseñado para spas y centros de bienestar. Centraliza la administración de citas, catálogo de servicios e inventario de productos.",
         features: [
@@ -1768,7 +1817,6 @@
         title: "OrderGo",
         badge: "ERP / Restaurantes / Repostería",
         gradient: ['#1a1005', '#3d2008'],
-        artIdx: 5,
         short: "ERP integral para reposterías y distribuidores de panadería: gestiona clientes, pedidos, facturación, inventario, domiciliarios y rutas en un solo sistema.",
         desc: "OrderGo SweetFlow es un ERP completo diseñado para reposterías, distribuidores de productos de panadería y negocios de venta por pedido. Centraliza la operación comercial desde la captura de clientes y la toma de pedidos hasta la facturación, cobranza, control de inventario, gestión de domiciliarios, mapas de entregas y reportes administrativos. Incluye roles diferenciados (Administrador, Vendedor y Domiciliario), envío automático de facturas por WhatsApp, geolocalización de clientes, códigos de descuento, combos/ofertas y exportación a Excel.",
         features: [
@@ -1793,20 +1841,29 @@
         ]
       },
       {
-        title: "L&H Software",
-        badge: "Corporativo",
+        title: "L&H App",
+        badge: "Aplicación móvil",
         gradient: ['#0a1a0d', '#1a3322'],
-        artIdx: 3,
-        short: "Sitio web corporativo con diseño moderno y gestión de servicios.",
-        desc: "Sitio web corporativo para L&H Software. Presenta los servicios de la empresa con diseño profesional, formulario de contacto y sección de portafolio.",
+        short: "App móvil para asistencia, ventas y entregas, tesorería y control de cargues y vehículos.",
+        desc: "L&H App es la aplicación móvil de L&H Distribuciones para apoyar la operación diaria de su equipo. Desde accesos rápidos permite consultar asistencias y horas extra, revisar informes de ventas y entregas, y gestionar tesorería: cargos por vehículo, liquidaciones, reportes de caja, créditos y observaciones. También ofrece seguimiento a vehículos y rutas, registro de cargues y captura masiva con OCR; el usuario puede revisar y corregir los datos detectados o agregar los que falten antes de guardarlos.",
         features: [
-          "Diseño corporativo moderno y responsive",
-          "Presentación de servicios y portafolio",
-          "Formulario de contacto funcional"
+          "Consulta de asistencias y horas extra",
+          "Informes de ventas y entregas para supervisores",
+          "Cargos diarios por vehículo y registro de liquidaciones",
+          "Procesamiento de liquidaciones a partir de una fotografía",
+          "Reportes diarios de caja, gastos, créditos y observaciones",
+          "Seguimiento a carros, planillas, fletes, rutas y vendedores asociados",
+          "Registro de cargues manual o masivo con lectura OCR y revisión antes de guardar"
         ],
-        tech: ["Python", "JavaScript", "CSS", "Flask", "HTML5"],
+        tech: [],
         link: "https://github.com/TheFive40/L_H-Web-Software",
-        media: []
+        media: [
+          {type: 'image', src: 'img/lhapp/lh-app-home.png', alt: 'Inicio de L&H App con accesos a Recursos Humanos, Venta y Entregas y Tesorería', orientation: 'portrait'},
+          {type: 'image', src: 'img/lhapp/treasury-modules.png', alt: 'Módulos de Tesorería para cargos, liquidaciones, reportes, créditos y seguimiento a carros', orientation: 'portrait'},
+          {type: 'image', src: 'img/lhapp/daily-cash-report.png', alt: 'Reporte diario de caja con resumen de picking, entregas, devoluciones, efectivo y gastos', orientation: 'portrait'},
+          {type: 'image', src: 'img/lhapp/daily-loads.png', alt: 'Cargos del día por vehículo con estado y registro de liquidaciones', orientation: 'portrait'},
+          {type: 'image', src: 'img/lhapp/bulk-loads-ocr.png', alt: 'Revisión de cargues detectados con OCR y edición de vehículo, conductor e importe', orientation: 'portrait'},
+        ]
       }
     ],
     desktop: [
@@ -1814,7 +1871,6 @@
         title: "Gravitagora Simulator",
         badge: "Simulación Física",
         gradient: ['#0a0f1a', '#0d1e33'],
-        artIdx: 3,
         short: "Simulador interactivo de física gravitacional con visualización en tiempo real.",
         desc: "Gravitagora Simulator es una aplicación de escritorio que simula comportamientos físicos gravitacionales. Permite crear cuerpos con masa y velocidad específicas y observar su interacción en tiempo real.",
         features: [
@@ -1836,7 +1892,6 @@
         title: "Hyperium",
         badge: "E-commerce",
         gradient: ['#1a1000', '#2e2000'],
-        artIdx: 4,
         short: "Sistema completo de tienda en línea con gestión de inventario y facturación.",
         desc: "Hyperium es una aplicación de escritorio para gestión de tienda con interfaz moderna en JavaFX. Incluye catálogo de productos, carrito de compras, inventario y módulo de facturación.",
         features: [
@@ -1860,7 +1915,7 @@
         title: "TrendMapper",
         badge: "Analytics",
         gradient: ['#0a1a0d', '#0d3315'],
-        artIdx: 1,
+        art: "analytics",
         short: "Dashboard de análisis de videos de YouTube con métricas y visualizaciones.",
         desc: "TrendMapper es una aplicación de escritorio para analizar tendencias de videos de YouTube. Extrae métricas clave, genera gráficas y permite identificar patrones en el contenido.",
         features: [
@@ -1877,7 +1932,7 @@
         title: "Reproductora MP3",
         badge: "Media Player",
         gradient: ['#0f0a1a', '#2a1040'],
-        artIdx: 2,
+        art: "music",
         short: "Reproductor de música con interfaz moderna y gestión de playlists.",
         desc: "Aplicación de escritorio para reproducción de audio. Soporta múltiples formatos, gestión de playlists y controles de reproducción completos.",
         features: [
@@ -1903,7 +1958,7 @@
       grid.innerHTML = projects[cat].map((p, i) => `
         <div class="proj-card" data-idx="${i}" style="animation-delay:${i * 55}ms">
           <div class="proj-preview">
-            ${makeArt(p.gradient, p.artIdx)}
+            ${makeArt(p)}
             <span class="proj-preview-label">${p.badge}</span>
             <div class="proj-hover-overlay"><span class="proj-hover-text">Ver detalles</span></div>
           </div>
@@ -1970,6 +2025,7 @@
     const main = document.getElementById('mediaMain');
     if (!main) return;
     const m = media[idx];
+    main.classList.toggle('portrait', m.orientation === 'portrait');
     if (m.type === 'video') {
       if (m.src.includes('youtube.com') || m.src.includes('youtu.be')) {
         const src = 'https://www.youtube.com/embed/' + extractYoutubeId(m.src) + '?autoplay=0';
@@ -1995,7 +2051,10 @@
     document.getElementById('modalTitle').textContent = p.title;
     document.getElementById('modalDesc').textContent = p.desc;
     document.getElementById('modalFeatures').innerHTML = (p.features || []).map(f => `<li>${f}</li>`).join('');
-    document.getElementById('modalTechs').innerHTML = p.tech.map(t => `<span class="modal-tech">${t}</span>`).join('');
+    const hasTech = Array.isArray(p.tech) && p.tech.length > 0;
+    document.getElementById('modalTechTitle').hidden = !hasTech;
+    document.getElementById('modalTechs').hidden = !hasTech;
+    document.getElementById('modalTechs').innerHTML = hasTech ? p.tech.map(t => `<span class="modal-tech">${t}</span>`).join('') : '';
     document.getElementById('modalGithub').href = p.link;
     document.getElementById('modal').classList.add('open');
     document.getElementById('backdrop').classList.add('open');
