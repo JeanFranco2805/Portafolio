@@ -623,6 +623,12 @@
       transition: opacity 0.2s;
     }
 
+    @media (min-width: 1200px) {
+      .projects-grid[data-category="desktop"] > .proj-card.is-desktop-centered {
+        grid-column: 2;
+      }
+    }
+
     .proj-card {
       background: var(--ink3);
       border: 1px solid var(--ink5);
@@ -1636,27 +1642,45 @@
 
   const projectArt = {
     restaurant: `
-      <rect x="28" y="18" width="284" height="144" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
-      <path d="M39 18h49v144H39a11 11 0 0 1-11-11V29a11 11 0 0 1 11-11Z" fill="rgba(8,8,9,.36)"/>
-      <circle cx="63" cy="43" r="14" fill="#d6784f" opacity=".92"/>
-      <path d="M54 44h18M63 35v18M57 39c3 3 9 3 12 0M57 49c3-3 9-3 12 0" fill="none" stroke="#fff4e9" stroke-width="1.5" stroke-linecap="round"/>
-      <rect x="48" y="72" width="30" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>
-      <rect x="48" y="86" width="24" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
-      <rect x="48" y="100" width="27" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
-      <rect x="104" y="31" width="92" height="8" rx="4" fill="rgba(255,255,255,.76)"/>
-      <rect x="251" y="27" width="47" height="17" rx="5" fill="rgba(71,157,110,.28)" stroke="rgba(119,211,158,.35)"/>
-      <circle cx="261" cy="35.5" r="3" fill="#7bd39c"/><rect x="268" y="33" width="22" height="5" rx="2.5" fill="rgba(255,255,255,.5)"/>
-      <rect x="103" y="53" width="88" height="73" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
-      <circle cx="147" cy="83" r="19" fill="rgba(214,120,79,.2)" stroke="rgba(214,120,79,.5)"/>
-      <path d="M135 84h24M147 72c-8 0-13 5-13 12s5 12 13 12 13-5 13-12-5-12-13-12Z" fill="none" stroke="#e7a17c" stroke-width="1.5"/>
-      <rect x="122" y="108" width="51" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>
-      <rect x="202" y="53" width="96" height="73" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
-      <rect x="213" y="65" width="73" height="6" rx="3" fill="rgba(255,255,255,.48)"/>
-      <rect x="213" y="79" width="58" height="5" rx="2.5" fill="rgba(255,255,255,.19)"/>
-      <rect x="213" y="92" width="65" height="5" rx="2.5" fill="rgba(255,255,255,.19)"/>
-      <rect x="213" y="106" width="38" height="10" rx="4" fill="rgba(214,120,79,.35)"/>
-      <rect x="103" y="137" width="195" height="8" rx="4" fill="rgba(255,255,255,.08)"/>
-      <rect x="103" y="137" width="126" height="8" rx="4" fill="#d6784f"/>
+      <rect x="24" y="17" width="292" height="146" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
+      <path d="M35 17h49v146H35a11 11 0 0 1-11-11V28a11 11 0 0 1 11-11Z" fill="rgba(8,8,9,.38)"/>
+      <circle cx="59" cy="41" r="14" fill="#d6784f" opacity=".92"/>
+      <circle cx="59" cy="41" r="7" fill="none" stroke="#fff4e9" stroke-width="1.5"/>
+      <path d="M42 33v16m4-16v7m-4-1h4m17-6c4 4 4 11 0 16m2-16v16" fill="none" stroke="#fff4e9" stroke-width="1.4" stroke-linecap="round"/>
+      <rect x="43" y="69" width="31" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>
+      <rect x="43" y="83" width="26" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
+      <rect x="43" y="97" width="29" height="5" rx="2.5" fill="rgba(255,255,255,.13)"/>
+      <rect x="43" y="125" width="25" height="5" rx="2.5" fill="rgba(214,120,79,.72)"/>
+      <rect x="94" y="27" width="90" height="7" rx="3.5" fill="rgba(255,255,255,.72)"/>
+      <text x="94" y="45" fill="rgba(255,255,255,.72)" font-family="Arial,sans-serif" font-size="7" font-weight="700" letter-spacing="1">MESAS Y PEDIDOS</text>
+      <rect x="257" y="24" width="48" height="17" rx="8.5" fill="rgba(71,157,110,.25)" stroke="rgba(119,211,158,.35)"/>
+      <circle cx="267" cy="32.5" r="3" fill="#7bd39c"/>
+      <text x="274" y="35" fill="rgba(255,255,255,.7)" font-family="Arial,sans-serif" font-size="5.4" font-weight="700">ACTIVO</text>
+      <rect x="92" y="53" width="128" height="98" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <text x="101" y="67" fill="rgba(255,255,255,.72)" font-family="Arial,sans-serif" font-size="7" font-weight="700" letter-spacing=".9">MESAS</text>
+      <rect x="101" y="74" width="52" height="29" rx="5" fill="rgba(71,157,110,.19)" stroke="rgba(119,211,158,.35)"/>
+      <circle cx="114" cy="88.5" r="7" fill="none" stroke="#80d4a1" stroke-width="1.3"/>
+      <text x="126" y="91" fill="rgba(255,255,255,.77)" font-family="Arial,sans-serif" font-size="6.5">01</text>
+      <circle cx="145" cy="80" r="2" fill="#80d4a1"/>
+      <rect x="159" y="74" width="52" height="29" rx="5" fill="rgba(214,120,79,.18)" stroke="rgba(214,120,79,.36)"/>
+      <circle cx="172" cy="88.5" r="7" fill="none" stroke="#e7a17c" stroke-width="1.3"/>
+      <text x="184" y="91" fill="rgba(255,255,255,.77)" font-family="Arial,sans-serif" font-size="6.5">02</text>
+      <circle cx="203" cy="80" r="2" fill="#e7a17c"/>
+      <rect x="101" y="109" width="52" height="29" rx="5" fill="rgba(71,157,110,.19)" stroke="rgba(119,211,158,.35)"/>
+      <circle cx="114" cy="123.5" r="7" fill="none" stroke="#80d4a1" stroke-width="1.3"/>
+      <text x="126" y="126" fill="rgba(255,255,255,.77)" font-family="Arial,sans-serif" font-size="6.5">03</text>
+      <circle cx="145" cy="115" r="2" fill="#80d4a1"/>
+      <rect x="159" y="109" width="52" height="29" rx="5" fill="rgba(214,120,79,.18)" stroke="rgba(214,120,79,.36)"/>
+      <circle cx="172" cy="123.5" r="7" fill="none" stroke="#e7a17c" stroke-width="1.3"/>
+      <text x="184" y="126" fill="rgba(255,255,255,.77)" font-family="Arial,sans-serif" font-size="6.5">04</text>
+      <circle cx="203" cy="115" r="2" fill="#e7a17c"/>
+      <rect x="228" y="53" width="77" height="98" rx="7" fill="rgba(255,255,255,.055)" stroke="rgba(255,255,255,.1)"/>
+      <text x="236" y="67" fill="rgba(255,255,255,.72)" font-family="Arial,sans-serif" font-size="6" font-weight="700" letter-spacing=".35">MENÚ / STOCK</text>
+      <circle cx="239" cy="81" r="4" fill="#d6784f"/><rect x="247" y="78" width="48" height="4" rx="2" fill="rgba(255,255,255,.46)"/><rect x="247" y="85" width="32" height="3" rx="1.5" fill="rgba(255,255,255,.18)"/>
+      <circle cx="239" cy="100" r="4" fill="#e3b65f"/><rect x="247" y="97" width="43" height="4" rx="2" fill="rgba(255,255,255,.46)"/><rect x="247" y="104" width="26" height="3" rx="1.5" fill="rgba(255,255,255,.18)"/>
+      <circle cx="239" cy="119" r="4" fill="#80d4a1"/><rect x="247" y="116" width="45" height="4" rx="2" fill="rgba(255,255,255,.46)"/><rect x="247" y="123" width="37" height="3" rx="1.5" fill="rgba(255,255,255,.18)"/>
+      <rect x="236" y="134" width="61" height="10" rx="4" fill="rgba(214,120,79,.3)"/>
+      <text x="243" y="141" fill="#f2c1a6" font-family="Arial,sans-serif" font-size="5.5" font-weight="700">PEDIDOS ACTIVOS</text>
     `,
     analytics: `
       <rect x="28" y="18" width="284" height="144" rx="11" fill="rgba(10,10,12,.62)" stroke="rgba(255,255,255,.16)"/>
@@ -1760,13 +1784,11 @@
         tech: ["Java", "Spring Boot", "Spring Security", "Thymeleaf", "JavaScript", "PostgreSQL"],
         link: "https://github.com/TheFive40/SisPlus/",
         media: [
-          {type: 'image', src: 'https://i.imgur.com/FdpiBpO.png'},
-          {type: 'image', src: 'https://i.imgur.com/w0QUlyP.png'},
-          {type: 'image', src: 'https://i.imgur.com/OiKFAzz.png'},
-          {type: 'image', src: 'https://i.imgur.com/3RtK69R.png'},
-          {type: 'image', src: 'https://i.imgur.com/cbOwO9Q.png'},
-          {type: 'image', src: 'https://i.imgur.com/K2xU5P3.png'},
-          {type: 'image', src: 'https://i.imgur.com/qHvKzCN.png'},
+          {type: 'image', src: 'img/lhamcontrol/dashboard-operativo.png', alt: 'Dashboard de L&H AM Control con empleados, asistencias, horas extra y alertas'},
+          {type: 'image', src: 'img/lhamcontrol/tesoreria.png', alt: 'Consulta de tesorería con resumen diario y detalle de cargues'},
+          {type: 'image', src: 'img/lhamcontrol/seguimiento-carros.png', alt: 'Seguimiento de vehículos, planillas, conductores, rutas y fletes'},
+          {type: 'image', src: 'img/lhamcontrol/recordatorios-vehiculos.png', alt: 'Recordatorios y alertas de vencimiento para vehículos'},
+          {type: 'image', src: 'img/lhamcontrol/gestion-cargues.png', alt: 'Gestión de cargues y control de la flota de vehículos'},
         ]
       },
       {
@@ -1774,12 +1796,13 @@
         badge: "Restaurantes",
         gradient: ['#1a0808', '#331010'],
         art: "restaurant",
-        short: "Sistema de información completo para gestionar restaurantes: pedidos, carta e inventario.",
-        desc: "Foopilot es una solución integral para la gestión de restaurantes. Permite administrar la carta digital, procesar pedidos en tiempo real, controlar el inventario de insumos y generar reportes de ventas.",
+        short: "App de gestión para restaurantes: organiza mesas, menú, pedidos e inventario desde un solo lugar.",
+        desc: "Foopilot reúne la operación diaria de un restaurante en una aplicación. Permite organizar las mesas y su estado de atención, administrar la carta y los productos, registrar pedidos, controlar el inventario de insumos y revisar reportes de ventas.",
         features: [
-          "Gestión de carta y menú digital",
-          "Procesamiento de pedidos en tiempo real",
-          "Control de inventario y alertas de stock",
+          "Gestión de mesas y estado de atención",
+          "Administración del menú, la carta y los productos",
+          "Registro y seguimiento de pedidos",
+          "Control de inventario de insumos y alertas de stock",
           "Reportes de ventas y estadísticas"
         ],
         tech: ["Python", "PostgreSQL", "JavaScript", "Flask", "CSS"],
@@ -1933,6 +1956,7 @@
         badge: "Media Player",
         gradient: ['#0f0a1a', '#2a1040'],
         art: "music",
+        centerInDesktopGrid: true,
         short: "Reproductor de música con interfaz moderna y gestión de playlists.",
         desc: "Aplicación de escritorio para reproducción de audio. Soporta múltiples formatos, gestión de playlists y controles de reproducción completos.",
         features: [
@@ -1955,8 +1979,9 @@
     const grid = document.getElementById('projectsGrid');
     grid.style.opacity = '0';
     setTimeout(() => {
+      grid.dataset.category = cat;
       grid.innerHTML = projects[cat].map((p, i) => `
-        <div class="proj-card" data-idx="${i}" style="animation-delay:${i * 55}ms">
+        <div class="proj-card${p.centerInDesktopGrid ? ' is-desktop-centered' : ''}" data-idx="${i}" style="animation-delay:${i * 55}ms">
           <div class="proj-preview">
             ${makeArt(p)}
             <span class="proj-preview-label">${p.badge}</span>
